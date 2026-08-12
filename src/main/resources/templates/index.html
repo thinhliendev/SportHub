@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SportHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-100 text-slate-900">
+<header class="border-b bg-white">
+    <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <a th:href="@{/}" class="text-2xl font-bold text-blue-700">SportHub</a>
+        <div class="flex items-center gap-4">
+            <div sec:authorize="isAnonymous()" class="flex gap-4">
+                <a th:href="@{/login}" class="font-medium text-blue-700">Đăng nhập</a>
+                <a th:href="@{/register}" class="rounded-md bg-blue-700 px-4 py-2 font-medium text-white">Đăng ký</a>
+            </div>
+            <div sec:authorize="isAuthenticated()" class="flex items-center gap-4">
+                <span>Xin chào, <strong sec:authentication="name"></strong></span>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="rounded-md border border-slate-300 px-4 py-2">Đăng xuất</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+</header>
+<main class="mx-auto max-w-6xl px-6 py-20 text-center">
+    <h1 class="text-5xl font-bold">Mua dụng cụ và đặt sân thể thao</h1>
+    <p class="mx-auto mt-5 max-w-2xl text-lg text-slate-600">SportHub kết nối người chơi với sản phẩm và địa điểm thể thao phù hợp.</p>
+</main>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>SportHub - Login</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        colors: { primary: '#0061a4', secondary: '#4c616c', background: '#f7f9fc', outline: '#707883' },
+        fontFamily: { sans: ['Inter'], mono: ['JetBrains Mono'] }
+      }}
+    }
+  </script>
+</head>
+<body class="bg-background text-slate-900 font-sans min-h-screen flex flex-col antialiased">
+<header class="bg-white w-full top-0 sticky z-50 border-b border-slate-300">
+  <div class="flex justify-between items-center w-full px-4 md:px-16 py-4 max-w-[1440px] mx-auto">
+    <a th:href="@{/}" class="text-2xl font-bold text-primary tracking-tight">SportHub</a>
+    <nav class="hidden md:flex items-center gap-6">
+      <a class="text-secondary font-medium hover:text-primary" href="#">Products</a>
+      <a class="text-secondary font-medium hover:text-primary" href="#">Venues</a>
+      <a class="text-secondary font-medium hover:text-primary" href="#">Bookings</a>
+    </nav>
+    <div class="flex items-center gap-4">
+      <a class="hidden md:block text-secondary font-medium hover:text-primary" th:href="@{/login}">Account</a>
+      <button class="text-secondary hover:text-primary p-2 rounded-full hover:bg-slate-100" type="button">
+        <span class="material-symbols-outlined">shopping_cart</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="flex-grow flex w-full max-w-[1440px] mx-auto">
+  <div class="hidden md:flex md:w-1/2 relative bg-cover bg-center"
+       style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDdhV4j_Cp7piu0oSpAhSFyhXZ9AaK6KBMqjLME9XmnNZ_Qx8cpDdK2ICxVb2aaNBPAFDUywhMxSzV-YBTSiKU4hBSzP8aVgmCw1jlDZ0NvrvPBfD044UMrhTTBkOMcAiWVzmxuBtQY0LVUo8XAEpZgMPUEqVC2VlbdFVs-3_nvJdrlL-3EtdNpT02aPrl7ptk-x30SE_minpJm00RLfQaB7o0dr4B5-3j0xZICXOLJDqn9uTIiSL96nA')">
+    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent"></div>
+    <div class="relative z-10 flex flex-col justify-end p-16 h-full w-full text-white">
+      <h1 class="text-6xl font-extrabold mb-4">Welcome Back</h1>
+      <p class="text-lg text-white/90 max-w-md">Fuel your passion. Manage your bookings and gear with seamless precision.</p>
+    </div>
+  </div>
+
+  <div class="w-full md:w-1/2 flex items-center justify-center px-4 py-10 md:px-16 bg-white">
+    <div class="w-full max-w-md space-y-6">
+      <div class="text-center md:text-left mb-10">
+        <h2 class="text-3xl md:text-4xl font-bold mb-2">Log in to SportHub</h2>
+        <p class="text-secondary">Enter your details below to access your account.</p>
+      </div>
+
+      <div th:if="${registrationSuccess}" class="rounded bg-green-50 px-4 py-3 text-green-800" th:text="${registrationSuccess}"></div>
+      <div th:if="${param.logout}" class="rounded bg-blue-50 px-4 py-3 text-blue-800">You have been logged out.</div>
+
+      <div class="flex flex-col gap-4">
+        <button class="w-full flex items-center justify-center gap-2 py-3 px-4 border-2 border-outline hover:border-primary font-mono text-xs uppercase rounded" type="button">
+          <svg class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Continue with Google
+        </button>
+        <button class="w-full flex items-center justify-center gap-2 py-3 px-4 border-2 border-outline hover:border-primary font-mono text-xs uppercase rounded" type="button">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.04 2.26-.79 3.59-.79 1.55.03 2.8.69 3.57 1.83-3.15 1.9-2.62 6.01.44 7.21-.75 1.83-1.74 3.65-2.68 3.92zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+          Continue with Apple
+        </button>
+      </div>
+
+      <div class="relative flex items-center py-2">
+        <div class="flex-grow border-t border-slate-300"></div>
+        <span class="mx-4 text-secondary font-mono text-xs uppercase">or login with email</span>
+        <div class="flex-grow border-t border-slate-300"></div>
+      </div>
+      <div th:if="${param.error}" class="rounded bg-red-50 px-4 py-3 text-red-700">Email or password is incorrect.</div>
+      <form th:action="@{/login}" class="space-y-6" method="post">
+        <div class="space-y-2">
+          <label class="block font-mono text-xs uppercase" for="email">Email Address</label>
+          <input class="w-full px-4 py-3 bg-transparent border border-outline rounded focus:border-primary focus:ring-primary"
+                 id="email" name="email" placeholder="athlete@sporthub.com" required type="email" autocomplete="email" autofocus/>
+        </div>
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <label class="block font-mono text-xs uppercase" for="password">Password</label>
+            <a class="font-mono text-xs text-primary hover:underline uppercase" href="#">Forgot password?</a>
+          </div>
+          <div class="relative">
+            <input class="w-full px-4 py-3 bg-transparent border border-outline rounded focus:border-primary focus:ring-primary"
+                   id="password" name="password" placeholder="••••••••" required type="password" autocomplete="current-password"/>
+            <button class="absolute inset-y-0 right-0 pr-3 flex items-center text-secondary hover:text-slate-900" type="button">
+              <span class="material-symbols-outlined">visibility</span>
+            </button>
+          </div>
+        </div>
+        <div class="flex items-center">
+          <input class="h-4 w-4 rounded border-outline text-primary focus:ring-primary" id="remember-me" name="remember-me" type="checkbox"/>
+          <label class="ml-2 cursor-pointer" for="remember-me">Keep me logged in</label>
+        </div>
+        <button class="w-full py-4 px-4 bg-primary text-white rounded font-mono text-xs uppercase tracking-wider hover:bg-blue-800 active:scale-[0.98]" type="submit">Login</button>
+      </form>
+      <div class="text-center pt-4">
+        <p class="text-secondary">Don't have an account? <a class="font-bold text-primary hover:underline" th:href="@{/register}">Sign up</a></p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="bg-slate-950 w-full mt-auto border-t border-slate-700 text-white">
+  <div class="flex flex-col md:flex-row justify-between items-center w-full px-4 md:px-16 py-10 max-w-[1440px] mx-auto gap-4">
+    <div><div class="text-2xl font-bold">SportHub</div><div class="opacity-80">© 2024 SportHub. All rights reserved.</div></div>
+    <nav class="flex flex-wrap justify-center gap-4 text-slate-300"><a href="#">Contact Us</a><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Shipping Info</a></nav>
+  </div>
+</footer>
+</body>
+</html>

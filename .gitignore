@@ -33,3 +33,4 @@ logs/
 application-local.properties
 application-secret.properties
 application-dev.properties
+SPORT_HUB.md

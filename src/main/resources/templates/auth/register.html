@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>SportHub - Registration Interface</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = { theme: { extend: {
+      colors: { primary: '#0061a4', secondary: '#4c616c', background: '#f7f9fc', outline: '#707883' },
+      fontFamily: { sans: ['Inter'], mono: ['JetBrains Mono'] }
+    }}}
+  </script>
+  <style>
+    .form-input { width:100%; border:1px solid #707883; border-radius:.125rem; padding:12px 16px; font:16px/24px Inter,sans-serif; color:#191c1e; background:transparent; transition:.2s; }
+    .form-input:focus { outline:none; border-width:2px; border-color:#0061a4; box-shadow:0 2px 4px rgba(0,0,0,.05); }
+    .form-label { display:block; margin-bottom:4px; font:500 12px/16px 'JetBrains Mono',monospace; letter-spacing:.05em; color:#404752; text-transform:uppercase; }
+    .btn-primary { background:#0061a4; color:#fff; border-radius:.25rem; padding:12px 24px; font:700 16px Inter,sans-serif; text-align:center; width:100%; transition:.2s; cursor:pointer; border:0; }
+    .btn-primary:hover { background:#00497d; }
+    .role-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .role-option { border:1px solid #707883; border-radius:.25rem; padding:16px; cursor:pointer; transition:.2s; }
+    .role-option input { display:none; }
+    .role-option:has(input:checked) { border-color:#0061a4; border-width:2px; background:#f7f9fc; }
+    .role-option:has(input:checked) .role-icon { color:#0061a4; }
+    .field-error { color:#ba1a1a; font-size:13px; margin-top:4px; }
+    .input-error { border-color:#ba1a1a; }
+  </style>
+</head>
+<body class="bg-white text-slate-900 font-sans antialiased min-h-screen flex flex-col">
+<header class="bg-white w-full top-0 sticky z-50">
+  <div class="flex justify-between items-center w-full px-4 md:px-16 py-4 max-w-[1440px] mx-auto border-b border-slate-300">
+    <a th:href="@{/}" class="text-2xl font-bold text-primary tracking-tight">SportHub</a>
+    <a class="text-secondary font-medium hover:text-primary flex items-center gap-2" th:href="@{/}">
+      <span class="font-mono text-xs uppercase">Return Home</span>
+    </a>
+  </div>
+</header>
+
+<main class="flex-grow flex flex-col md:flex-row w-full max-w-[1440px] mx-auto">
+  <section class="hidden md:flex md:w-1/2 relative bg-slate-200 flex-col justify-end p-16 overflow-hidden">
+    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+         style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAYBYXiwaeru6k9Fb3Atgq9qLtoAo4cIA1lT_Ip3nBl1YBcLXyyxBs1LaVZOQggJ5DEKUREr0tDtKJZiOaaWNUC7PjIT2Nhtdv6si5XGfT_N6Hxv3EL0NdmicpKH4msmfkpU9X770S9l3o-EfkoUgOb6qo6Z8PfQ4h59wAnCdutqR3xcbzafvr9nQrEx0yujzWGij4v1dhFX4JZRdY6cXab7Qg0JkAj2pP2hYpRM18DLc3xpAEu4z5vmA')"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+    <div class="relative z-10 text-white max-w-md">
+      <h1 class="text-6xl font-extrabold mb-4 tracking-tight leading-tight">Elevate Your Game.</h1>
+      <p class="text-lg text-slate-200 mb-10">Join the premier network for athletes and venues. Seamless booking, powerful analytics, and unyielding performance.</p>
+      <div class="flex gap-4 items-center"><div class="w-12 h-1 bg-primary"></div><span class="font-mono text-xs uppercase tracking-widest text-blue-200">Performance Awaits</span></div>
+    </div>
+  </section>
+
+  <section class="w-full md:w-1/2 flex flex-col justify-center px-4 md:px-16 py-10 bg-white">
+    <div class="max-w-md w-full mx-auto">
+      <div class="mb-10 text-center md:text-left">
+        <h2 class="text-3xl md:text-4xl font-bold mb-2">Create Account</h2>
+        <p class="text-secondary">Join SportHub to discover venues or manage your own.</p>
+      </div>
+
+      <form th:action="@{/register}" th:object="${registrationForm}" class="space-y-4" method="post">
+        <div class="mb-6">
+          <label class="form-label">I am joining as a</label>
+          <div class="role-grid">
+            <label class="role-option">
+              <input checked name="role" type="radio" value="customer"/>
+              <div class="flex flex-col items-center text-center">
+                <span class="material-symbols-outlined role-icon text-outline mb-2" style="font-size:32px">sports_martial_arts</span>
+                <span class="font-bold">Athlete</span><span class="font-mono text-xs text-secondary mt-1">Book Venues</span>
+              </div>
+            </label>
+            <label class="role-option" title="Venue owner registration will be available later">
+              <input name="role" type="radio" value="venue" disabled/>
+              <div class="flex flex-col items-center text-center opacity-60">
+                <span class="material-symbols-outlined role-icon text-outline mb-2" style="font-size:32px">stadium</span>
+                <span class="font-bold">Venue Owner</span><span class="font-mono text-xs text-secondary mt-1">Coming Soon</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label class="form-label" for="fullName">Full Name</label>
+          <input class="form-input" th:classappend="${#fields.hasErrors('fullName')} ? ' input-error'" id="fullName" th:field="*{fullName}" placeholder="e.g. Alex Johnson" type="text"/>
+          <p class="field-error" th:errors="*{fullName}"></p>
+        </div>
+        <div>
+          <label class="form-label" for="email">Email Address</label>
+          <input class="form-input" th:classappend="${#fields.hasErrors('email')} ? ' input-error'" id="email" th:field="*{email}" placeholder="alex@example.com" type="email"/>
+          <p class="field-error" th:errors="*{email}"></p>
+        </div>
+        <div>
+          <label class="form-label" for="phone">Phone Number</label>
+          <input class="form-input" th:classappend="${#fields.hasErrors('phone')} ? ' input-error'" id="phone" th:field="*{phone}" placeholder="+84 901 234 567" type="tel"/>
+          <p class="field-error" th:errors="*{phone}"></p>
+        </div>
+        <div>
+          <label class="form-label" for="password">Password</label>
+          <div class="relative">
+            <input class="form-input" th:classappend="${#fields.hasErrors('password')} ? ' input-error'" id="password" name="password" placeholder="••••••••" type="password" autocomplete="new-password"/>
+            <button class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-primary" type="button"><span class="material-symbols-outlined">visibility</span></button>
+          </div>
+          <p class="field-error" th:errors="*{password}"></p>
+        </div>
+        <div>
+          <label class="form-label" for="confirmPassword">Confirm Password</label>
+          <input class="form-input" th:classappend="${#fields.hasErrors('confirmPassword')} ? ' input-error'" id="confirmPassword" name="confirmPassword" placeholder="••••••••" type="password" autocomplete="new-password"/>
+          <p class="field-error" th:errors="*{confirmPassword}"></p>
+        </div>
+        <div class="pt-2"><button class="btn-primary" type="submit">Create Account</button></div>
+        <div class="text-center mt-4"><p class="text-secondary">Already have an account? <a class="text-primary font-bold hover:underline" th:href="@{/login}">Log in</a></p></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="bg-slate-950 w-full mt-auto border-t border-slate-700 text-white">
+  <div class="flex flex-col md:flex-row justify-between items-center w-full px-4 md:px-16 py-10 max-w-[1440px] mx-auto">
+    <div class="text-2xl font-bold mb-4 md:mb-0">SportHub</div>
+    <nav class="flex flex-wrap justify-center gap-6 mb-4 md:mb-0 text-slate-300"><a href="#">Contact Us</a><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Shipping Info</a></nav>
+    <div class="text-slate-300">© 2024 SportHub. All rights reserved.</div>
+  </div>
+</footer>
+</body>
+</html>
