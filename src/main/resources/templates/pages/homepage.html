@@ -1,0 +1,229 @@
+<!DOCTYPE html><html class="light" lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>SportHub Home</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#404752",
+                        "surface-dim": "#d8dadd",
+                        "on-primary-fixed": "#001d36",
+                        "on-secondary-fixed-variant": "#354a53",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#cfe6f2",
+                        "outline-variant": "#bfc7d4",
+                        "primary-fixed": "#d1e4ff",
+                        "primary": "#0061a4",
+                        "surface-container-low": "#f2f4f7",
+                        "on-tertiary-fixed": "#2e1500",
+                        "tertiary": "#904d00",
+                        "on-background": "#191c1e",
+                        "inverse-on-surface": "#eff1f4",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#ffb77b",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#2d3133",
+                        "on-surface": "#191c1e",
+                        "secondary-fixed-dim": "#b4cad6",
+                        "on-primary-container": "#002c4f",
+                        "on-error": "#ffffff",
+                        "background": "#f7f9fc",
+                        "surface-variant": "#e0e3e6",
+                        "surface-container": "#eceef1",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#ffdcc2",
+                        "on-secondary-container": "#526772",
+                        "secondary": "#4c616c",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#f7f9fc",
+                        "on-tertiary-fixed-variant": "#6d3900",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#0061a4",
+                        "surface-container-high": "#e6e8eb",
+                        "primary-container": "#2196f3",
+                        "primary-fixed-dim": "#9ecaff",
+                        "inverse-primary": "#9ecaff",
+                        "surface-bright": "#f7f9fc",
+                        "surface-container-highest": "#e0e3e6",
+                        "on-secondary-fixed": "#071e27",
+                        "outline": "#707883",
+                        "tertiary-container": "#db7900",
+                        "on-tertiary-container": "#452200",
+                        "on-primary-fixed-variant": "#00497d",
+                        "on-tertiary": "#ffffff",
+                        "secondary-container": "#cfe6f2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "xl": "40px",
+                        "sm": "8px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "64px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "38px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "800" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="bg-surface-container-lowest dark:bg-inverse-surface w-full top-0 sticky z-50 border-b border-outline-variant dark:border-outline">
+    <div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-[1440px] mx-auto">
+        <!-- Brand -->
+        <div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed tracking-tight">
+            SportHub
+        </div>
+        <!-- Navigation Links (Web) -->
+        <div class="hidden md:flex gap-lg items-center">
+            <a class="text-secondary dark:text-secondary-fixed-dim font-medium hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200 cursor-pointer active:scale-95 font-body-md text-body-md" th:href="@{/products}">Products</a>
+            <a class="text-secondary dark:text-secondary-fixed-dim font-medium hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200 cursor-pointer active:scale-95 font-body-md text-body-md" href="#">Venues</a>
+            <a class="text-secondary dark:text-secondary-fixed-dim font-medium hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200 cursor-pointer active:scale-95 font-body-md text-body-md" href="#">Bookings</a>
+        </div>
+        <!-- Trailing Actions -->
+        <div class="flex items-center gap-md">
+            <div class="hidden md:flex items-center border border-outline-variant rounded px-sm py-xs bg-surface focus-within:border-primary focus-within:border-2 transition-all">
+                <span class="material-symbols-outlined text-outline text-[20px] mr-xs">search</span>
+                <input class="bg-transparent border-none outline-none text-body-md font-body-md w-48 text-on-surface p-0 focus:ring-0 placeholder:text-outline-variant" placeholder="Search..." type="text">
+            </div>
+            <button class="cursor-pointer active:scale-95 hover:text-primary transition-colors duration-200 text-on-surface-variant flex items-center justify-center p-xs">
+                <span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+            </button>
+            <a class="font-body-md text-body-md font-medium text-primary hover:text-primary-container transition-colors cursor-pointer active:scale-95 hidden md:block" th:href="@{/login}" sec:authorize="isAnonymous()">
+                Account
+            </a>
+            <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()" class="hidden md:block">
+                <button class="font-body-md text-body-md font-medium text-primary hover:text-primary-container transition-colors cursor-pointer active:scale-95" type="submit">Logout</button>
+            </form>
+            <!-- Mobile Menu Toggle -->
+            <button class="md:hidden text-on-surface-variant p-xs">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </div>
+</nav>
+<main>
+    <!-- Hero Section -->
+    <section class="relative w-full h-[819px] min-h-[600px] flex items-center justify-center bg-surface-container-high overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img alt="Hero Background" class="w-full h-full object-cover object-center opacity-90 mix-blend-multiply filter brightness-110 contrast-125" data-alt="A dynamic, high-contrast photograph of a sprinter exploding off the starting blocks on a vibrant red track. The image is bathed in bright, crisp sunlight, creating strong shadows and emphasizing athletic performance. The style is modern, energetic, and professional, aligning with a high-end sports brand. Dominant colors are stark white, deep shadows, and electric blue accents in the athletic wear." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBo9qCuCLFHEyEJTKV78i0Z7NfmkXpqeqiDD5Ehklw95IidFyEFdZf49PFOrBjOYFW54u0sOevL4XvvZtbz3svy_xbGfgSu41p1uMUS3LwPgY4VvNZ1aQ-3_kon5SPhYUxwF1rXJ6Msn7KuMjRln85MftQO76GWKcgOe3818K0qm89dOaRKbY1BYpXcZx4KPNYqpO-COwox4simPl_6fzJaWwvQl9wF55PlyMptPIPrz4HpDoWRidSrBg">
+            <div class="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-transparent"></div>
+        </div>
+        <div class="relative z-10 w-full max-w-[1440px] px-margin-mobile md:px-margin-desktop mx-auto grid grid-cols-1 md:grid-cols-2 gap-xl">
+            <div class="flex flex-col justify-center space-y-md">
+                <h1 class="font-display-lg text-display-lg text-on-surface max-w-2xl leading-tight">
+                    ELEVATE YOUR <br><span class="text-primary">PERFORMANCE</span>
+                </h1>
+                <p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg mb-lg">
+                    Premium gear for peak performance. World-class venues for your next victory. Everything an athlete needs in one place.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-md mt-sm">
+                    <a th:href="@{/products}" class="bg-[#db7900] text-on-primary font-body-md text-body-md font-bold py-md px-lg rounded flex items-center justify-center gap-xs hover:bg-tertiary-container transition-colors active:scale-95 shadow-[0_2px_4px_rgba(0,0,0,0.05)] border border-transparent">
+                        Shop Premium Gear
+                        <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+                    </a>
+                    <button class="bg-primary text-on-primary font-body-md text-body-md font-bold py-md px-lg rounded flex items-center justify-center gap-xs hover:bg-primary-container transition-colors active:scale-95 shadow-[0_2px_4px_rgba(0,0,0,0.05)] border border-transparent">
+                        Book a Court Near You
+                        <span class="material-symbols-outlined text-[20px]">location_on</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Featured Categories -->
+    <section class="w-full max-w-[1440px] px-margin-mobile md:px-margin-desktop mx-auto py-[80px]">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-lg border-b border-outline-variant pb-sm">
+            <div>
+                <h2 class="font-headline-lg text-headline-lg text-on-surface">Explore Categories</h2>
+            </div>
+            <a class="font-body-md text-body-md text-primary font-bold hover:underline flex items-center gap-xs" th:href="@{/products}">
+                View All <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+            </a>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-md md:gap-gutter">
+            <!-- Category 1 -->
+            <div class="group cursor-pointer relative overflow-hidden rounded bg-surface-container-low border border-outline-variant aspect-square flex items-center justify-center hover:border-primary transition-colors hover:shadow-[0_2px_4px_rgba(0,0,0,0.05)]">
+                <img class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500 mix-blend-luminosity group-hover:mix-blend-normal" data-alt="A clean, minimalist flat-lay style studio shot of a high-end basketball resting on a polished hardwood surface. The lighting is crisp and bright, emphasizing the texture of the ball. The aesthetic is modern and high-contrast, perfectly suited for a premium sports equipment catalog." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBF7IgD3QBrFpTwpSRCb10-yRAUGVYC1SprSWo4DHwxqpnOm9tAVLhNWdPZPXzvJTbqj1cJvvBM7RTGC9fv9CSEaCQyUec-cicEfKzuw_H9kicMIsvgicC8bXMNGaBM7dC-GKtBrdALFmv4HJAqyKlgw884DW_YJJrxf-rzJTozGBwfibx-bcsh7j6kPY6FrksZaW5mDJML-LN8Gt5dK5dEFqSe8r_ao7ZjrnFWGs1vM53S-m9_FN2VA">
+                <div class="absolute inset-0 bg-gradient-to-t from-on-background/80 to-transparent"></div>
+                <span class="relative z-10 font-headline-md text-headline-md text-on-primary mt-auto mb-md">Basketball</span>
+            </div>
+            <!-- Category 2 -->
+            <div class="group cursor-pointer relative overflow-hidden rounded bg-surface-container-low border border-outline-variant aspect-square flex items-center justify-center hover:border-primary transition-colors hover:shadow-[0_2px_4px_rgba(0,0,0,0.05)]">
+                <img class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500 mix-blend-luminosity group-hover:mix-blend-normal" data-alt="A detailed close-up shot of a professional tennis racket resting against a bright blue hardcourt surface, with a neon yellow tennis ball nearby. The image features sharp focus, bright studio lighting, and high contrast, conveying a sense of energy and precision in a modern sports setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbwdDsATcu23f_Hr5NS9sx7z-IbXgxWiQCBTdA3AqREVm5yjlpcxHVApb6j3f4yB12ldR_ZNppzKeQDROZfYpIa02DNQoqKIyIl1lsQ_KujrghkenM-X_y7PU41YbNFUhuMaPcg6LyTVC38L7hHb5VU4GzYZFCn91oKhnDFrVZ1O1KqnbjSg9u5o2qWdp1Ejh9q26nRbzxjV2mGS64SRh4oqwSZ1ZBE6DA-mP23i53ssv4G8PbMam-Tg">
+                <div class="absolute inset-0 bg-gradient-to-t from-on-background/80 to-transparent"></div>
+                <span class="relative z-10 font-headline-md text-headline-md text-on-primary mt-auto mb-md">Tennis</span>
+            </div>
+            <!-- Category 3 -->
+            <div class="group cursor-pointer relative overflow-hidden rounded bg-surface-container-low border border-outline-variant aspect-square flex items-center justify-center hover:border-primary transition-colors hover:shadow-[0_2px_4px_rgba(0,0,0,0.05)]">
+                <img class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500 mix-blend-luminosity group-hover:mix-blend-normal" data-alt="A sleek, aerodynamic running shoe displayed in a stark white, brightly lit studio environment. The focus is entirely on the shoe's technical design and sharp lines, with subtle gray shadows grounding it. The aesthetic is highly professional, clean, and modern, representing elite athletic performance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD90DWlX2Y8ioq-xIyN7pwSPSm03mPqUGgagGeWfuPoYzKXhJjuP1j-ubALHjEXbxPY8ac-dD23rgTxiMsN2frSoDgLa4VzQGJzjkjPJN57oHzBFRYfhHeM15dkQ0QL-q7j_MmHf47lvTYHGJAhaDGiqR6BynlVUaGwebZqzaLc0ppbYFHaFOS9yF6NIqVz9DQLWHssFttVpS1aYR_keW1iptLXo2NLqpVpyqHZk1chKzyDKjzufDoCQg">
+                <div class="absolute inset-0 bg-gradient-to-t from-on-background/80 to-transparent"></div>
+                <span class="relative z-10 font-headline-md text-headline-md text-on-primary mt-auto mb-md">Running</span>
+            </div>
+            <!-- Category 4 -->
+            <div class="group cursor-pointer relative overflow-hidden rounded bg-surface-container-low border border-outline-variant aspect-square flex items-center justify-center hover:border-primary transition-colors hover:shadow-[0_2px_4px_rgba(0,0,0,0.05)]">
+                <img class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500 mix-blend-luminosity group-hover:mix-blend-normal" data-alt="A professional soccer ball sitting on pristine, bright green turf. The lighting is crisp and mimics high-noon sunlight, casting a sharp shadow. The image is high-definition, minimalist, and vibrant, focusing on the geometry of the ball and the texture of the turf in a premium sports context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnUF3PCNTPhnxAGefb2Y69Pro2k1ghMn145F50kcEDVQHz3MVvCIqi2uoRIpw3ZvR3q4DJqvorjtBTxQHReDswW6vSkFpgbDwRubB9cPQaCLZfmYGyzwTKKL4kXao8lshkVsPm5VgXK1G0C8c81AH0ir1ioH2igJJ_KOOytSArU1TTflqH7hGpML6HcbVowEMPqaq4rrTIu51rI1UKv9Ccgpp_AiSeWdycl6z_x4Wh8MITqT6riLgrDQ">
+                <div class="absolute inset-0 bg-gradient-to-t from-on-background/80 to-transparent"></div>
+                <span class="relative z-10 font-headline-md text-headline-md text-on-primary mt-auto mb-md">Soccer</span>
+            </div>
+        </div>
+    </section>
+</main>
+<!-- Footer -->
+<footer class="bg-on-background dark:bg-surface-container-lowest w-full mt-auto border-t border-outline-variant">
+    <div class="flex flex-col md:flex-row justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-xl max-w-[1440px] mx-auto gap-md">
+        <div class="font-headline-md text-headline-md font-bold text-surface-container-lowest dark:text-primary">
+            SportHub
+        </div>
+        <div class="flex flex-wrap justify-center gap-md md:gap-lg">
+            <a class="text-surface-variant dark:text-on-surface-variant font-body-md text-body-md hover:underline transition-opacity duration-200" href="#">Contact Us</a>
+            <a class="text-surface-variant dark:text-on-surface-variant font-body-md text-body-md hover:underline transition-opacity duration-200" href="#">Privacy Policy</a>
+            <a class="text-surface-variant dark:text-on-surface-variant font-body-md text-body-md hover:underline transition-opacity duration-200" href="#">Terms of Service</a>
+            <a class="text-surface-variant dark:text-on-surface-variant font-body-md text-body-md hover:underline transition-opacity duration-200" href="#">Shipping Info</a>
+        </div>
+        <div class="text-surface-variant dark:text-on-surface-variant font-body-md text-body-md mt-md md:mt-0">
+            © 2024 SportHub. All rights reserved.
+        </div>
+    </div>
+</footer>
+</body></html>

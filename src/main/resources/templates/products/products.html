@@ -1,0 +1,250 @@
+<!DOCTYPE html><html class="light" lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Product List Interface - SportHub</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#404752",
+                        "surface-dim": "#d8dadd",
+                        "on-primary-fixed": "#001d36",
+                        "on-secondary-fixed-variant": "#354a53",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#cfe6f2",
+                        "outline-variant": "#bfc7d4",
+                        "primary-fixed": "#d1e4ff",
+                        "primary": "#0061a4",
+                        "surface-container-low": "#f2f4f7",
+                        "on-tertiary-fixed": "#2e1500",
+                        "tertiary": "#904d00",
+                        "on-background": "#191c1e",
+                        "inverse-on-surface": "#eff1f4",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#ffb77b",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#2d3133",
+                        "on-surface": "#191c1e",
+                        "secondary-fixed-dim": "#b4cad6",
+                        "on-primary-container": "#002c4f",
+                        "on-error": "#ffffff",
+                        "background": "#f7f9fc",
+                        "surface-variant": "#e0e3e6",
+                        "surface-container": "#eceef1",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#ffdcc2",
+                        "on-secondary-container": "#526772",
+                        "secondary": "#4c616c",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#f7f9fc",
+                        "on-tertiary-fixed-variant": "#6d3900",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#0061a4",
+                        "surface-container-high": "#e6e8eb",
+                        "primary-container": "#2196f3",
+                        "primary-fixed-dim": "#9ecaff",
+                        "inverse-primary": "#9ecaff",
+                        "surface-bright": "#f7f9fc",
+                        "surface-container-highest": "#e0e3e6",
+                        "on-secondary-fixed": "#071e27",
+                        "outline": "#707883",
+                        "tertiary-container": "#db7900",
+                        "on-tertiary-container": "#452200",
+                        "on-primary-fixed-variant": "#00497d",
+                        "on-tertiary": "#ffffff",
+                        "secondary-container": "#cfe6f2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "xl": "40px",
+                        "sm": "8px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "64px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "38px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "800" }]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md text-body-md">
+<!-- TopNavBar -->
+<header class="bg-surface-container-lowest dark:bg-inverse-surface w-full top-0 sticky z-50 border-b border-outline-variant dark:border-outline">
+    <div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-[1440px] mx-auto">
+        <div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed tracking-tight">SportHub</div>
+        <nav class="hidden md:flex gap-6">
+            <a class="text-primary dark:text-primary-fixed font-bold border-b-2 border-primary dark:border-primary-fixed pb-1" th:href="@{/products}">Products</a>
+            <a class="text-secondary dark:text-secondary-fixed-dim font-medium hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200 cursor-pointer active:scale-95" href="#">Venues</a>
+            <a class="text-secondary dark:text-secondary-fixed-dim font-medium hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200 cursor-pointer active:scale-95" href="#">Bookings</a>
+        </nav>
+        <div class="flex items-center gap-4">
+            <div class="hidden md:flex items-center bg-surface-container-low px-3 py-2 rounded border border-outline-variant">
+                <span class="material-symbols-outlined text-on-surface-variant mr-2" data-icon="search">search</span>
+                <input class="bg-transparent border-none focus:ring-0 p-0 text-sm w-48 text-on-surface" placeholder="Search..." type="text">
+            </div>
+            <button class="text-secondary dark:text-secondary-fixed-dim hover:text-primary transition-colors duration-200 cursor-pointer active:scale-95 flex items-center">
+                <span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+            </button>
+            <a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary transition-colors duration-200 cursor-pointer active:scale-95 font-medium hidden sm:block" th:href="@{/login}" sec:authorize="isAnonymous()">Account</a>
+            <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()" class="hidden sm:block">
+                <button class="text-secondary hover:text-primary font-medium" type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow flex flex-col md:flex-row max-w-[1440px] mx-auto w-full px-margin-mobile md:px-margin-desktop py-xl gap-gutter">
+    <!-- Sidebar Filters -->
+    <aside class="w-full md:w-64 flex-shrink-0 flex flex-col gap-6">
+        <div>
+            <h3 class="font-headline-md text-headline-md font-bold text-on-background mb-4">Filters</h3>
+            <!-- Category Filter -->
+            <div class="mb-6">
+                <h4 class="font-label-sm text-label-sm text-on-surface-variant mb-3 uppercase">Category</h4>
+                <div class="flex flex-col gap-2">
+                    <label class="flex items-center gap-2 cursor-pointer group">
+                        <input checked="" class="rounded border-outline text-primary focus:ring-primary h-4 w-4 bg-surface" type="checkbox">
+                        <span class="text-on-surface group-hover:text-primary transition-colors">Apparel</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer group">
+                        <input checked="" class="rounded border-outline text-primary focus:ring-primary h-4 w-4 bg-surface" type="checkbox">
+                        <span class="text-on-surface group-hover:text-primary transition-colors">Shoes</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer group">
+                        <input class="rounded border-outline text-primary focus:ring-primary h-4 w-4 bg-surface" type="checkbox">
+                        <span class="text-on-surface group-hover:text-primary transition-colors">Equipment</span>
+                    </label>
+                </div>
+            </div>
+            <!-- Price Range Filter -->
+            <div class="mb-6">
+                <h4 class="font-label-sm text-label-sm text-on-surface-variant mb-3 uppercase">Price Range</h4>
+                <div class="flex items-center gap-2">
+                    <input class="w-full bg-surface-container-low border border-outline-variant rounded p-2 text-sm focus:border-primary focus:border-2 focus:ring-0" placeholder="Min" type="number">
+                    <span class="text-on-surface-variant">-</span>
+                    <input class="w-full bg-surface-container-low border border-outline-variant rounded p-2 text-sm focus:border-primary focus:border-2 focus:ring-0" placeholder="Max" type="number">
+                </div>
+            </div>
+            <!-- Brand Filter -->
+            <div class="mb-6">
+                <h4 class="font-label-sm text-label-sm text-on-surface-variant mb-3 uppercase">Brand</h4>
+                <div class="flex flex-col gap-2">
+                    <label class="flex items-center gap-2 cursor-pointer group">
+                        <input class="rounded border-outline text-primary focus:ring-primary h-4 w-4 bg-surface" type="checkbox">
+                        <span class="text-on-surface group-hover:text-primary transition-colors">Velocity</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer group">
+                        <input class="rounded border-outline text-primary focus:ring-primary h-4 w-4 bg-surface" type="checkbox">
+                        <span class="text-on-surface group-hover:text-primary transition-colors">Apex Gear</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer group">
+                        <input class="rounded border-outline text-primary focus:ring-primary h-4 w-4 bg-surface" type="checkbox">
+                        <span class="text-on-surface group-hover:text-primary transition-colors">Titan</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <button class="bg-surface-container-highest text-on-surface px-4 py-2 rounded font-medium hover:bg-outline-variant transition-colors">
+            Clear Filters
+        </button>
+    </aside>
+    <!-- Product Grid Area -->
+    <section class="flex-grow flex flex-col">
+        <!-- Toolbar -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4 border-b border-outline-variant pb-4">
+            <p class="font-body-md text-body-md text-on-surface-variant">
+                <span th:text="${productPage.totalElements}">0</span> Products Found
+            </p>
+            <div class="flex items-center gap-3 w-full sm:w-auto">
+                <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Sort by:</span>
+                <select class="bg-surface-container-lowest border border-outline-variant rounded px-3 py-1.5 text-sm focus:border-primary focus:border-2 focus:ring-0 text-on-surface cursor-pointer w-full sm:w-auto">
+                    <option>Featured</option>
+                    <option>Newest Arrivals</option>
+                    <option>Price: Low to High</option>
+                    <option>Price: High to Low</option>
+                </select>
+            </div>
+        </div>
+        <!-- Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <article th:each="product : ${productPage.content}" class="bg-surface-container-lowest border border-outline-variant rounded overflow-hidden hover:shadow-sm hover:shadow-[0_2px_4px_rgba(0,0,0,0.05)] transition-shadow duration-200 group flex flex-col">
+                <div class="w-full h-48 bg-surface-container-low overflow-hidden relative">
+                    <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" th:alt="${product.name}" th:src="${product.imageUrl}">
+                </div>
+                <div class="p-4 flex flex-col flex-grow">
+                    <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1" th:text="${product.categoryName}">Category</span>
+                    <h3 class="font-body-md text-body-md font-bold text-on-surface leading-tight mb-2" th:text="${product.name}">Product name</h3>
+                    <p class="font-body-lg text-body-lg text-primary font-bold mt-auto mb-1" th:text="${'$' + #numbers.formatDecimal(product.price, 1, 2)}">$0.00</p>
+                    <p class="text-sm mb-4" th:classappend="${product.inStock} ? ' text-green-700' : ' text-error'" th:text="${product.inStock ? product.quantity + ' in stock' : 'Out of stock'}">In stock</p>
+                    <button class="w-full bg-tertiary-container hover:bg-tertiary text-on-tertiary-container hover:text-on-tertiary rounded py-2 font-medium transition-colors duration-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed" th:disabled="${!product.inStock}">
+                        <span th:text="${product.inStock ? 'Add to Cart' : 'Out of Stock'}">Add to Cart</span>
+                    </button>
+                </div>
+            </article>
+            <p th:if="${productPage.empty}" class="sm:col-span-2 lg:col-span-3 py-16 text-center text-on-surface-variant">No products are available yet.</p>
+        </div>
+        <div th:if="${productPage.totalPages > 1}" class="mt-12 flex justify-center gap-2">
+            <a th:if="${productPage.hasPrevious()}" th:href="@{/products(page=${productPage.number - 1})}" class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant text-on-surface-variant hover:bg-surface-variant"><span class="material-symbols-outlined text-sm">chevron_left</span></a>
+            <a th:each="pageNumber : ${#numbers.sequence(0, productPage.totalPages - 1)}" th:href="@{/products(page=${pageNumber})}" th:text="${pageNumber + 1}" th:class="${pageNumber == productPage.number ? 'w-8 h-8 flex items-center justify-center rounded bg-primary text-on-primary font-medium text-sm' : 'w-8 h-8 flex items-center justify-center rounded border border-outline-variant text-on-surface hover:bg-surface-variant font-medium text-sm'}">1</a>
+            <a th:if="${productPage.hasNext()}" th:href="@{/products(page=${productPage.number + 1})}" class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant text-on-surface-variant hover:bg-surface-variant"><span class="material-symbols-outlined text-sm">chevron_right</span></a>
+        </div>
+    </section>
+</main>
+<!-- Footer -->
+<footer class="bg-on-background dark:bg-surface-container-lowest w-full mt-auto border-t border-outline-variant">
+    <div class="flex flex-col md:flex-row justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-xl max-w-[1440px] mx-auto">
+        <div class="font-headline-md text-headline-md font-bold text-surface-container-lowest dark:text-primary mb-4 md:mb-0">
+            SportHub
+        </div>
+        <nav class="flex flex-wrap justify-center gap-6 mb-6 md:mb-0">
+            <a class="text-surface-variant dark:text-on-surface-variant hover:underline transition-opacity duration-200" href="#">Contact Us</a>
+            <a class="text-surface-variant dark:text-on-surface-variant hover:underline transition-opacity duration-200" href="#">Privacy Policy</a>
+            <a class="text-surface-variant dark:text-on-surface-variant hover:underline transition-opacity duration-200" href="#">Terms of Service</a>
+            <a class="text-surface-variant dark:text-on-surface-variant hover:underline transition-opacity duration-200" href="#">Shipping Info</a>
+        </nav>
+        <div class="font-body-md text-body-md text-surface-variant dark:text-on-surface-variant text-sm">
+            © 2024 SportHub. All rights reserved.
+        </div>
+    </div>
+</footer>
+</body></html>
