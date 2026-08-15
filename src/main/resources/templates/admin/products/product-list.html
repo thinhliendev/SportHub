@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Manage Products | SportHub Admin</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;family=Material+Symbols+Outlined" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-slate-100 font-[Inter] text-slate-900">
+<header class="border-b border-slate-200 bg-white">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <div class="flex items-center gap-6">
+            <a th:href="@{/admin}" class="text-2xl font-bold text-blue-700">SportHub Admin</a>
+            <a th:href="@{/admin}" class="text-slate-600 hover:text-blue-700">Dashboard</a>
+            <a th:href="@{/admin/products}" class="font-semibold text-blue-700">Products</a>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="hidden text-sm text-slate-600 sm:block" sec:authentication="name">admin</span>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="rounded border border-slate-300 px-3 py-2 text-sm hover:bg-slate-50">Logout</button>
+            </form>
+        </div>
+    </nav>
+</header>
+
+<main class="mx-auto max-w-7xl px-6 py-8">
+    <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+        <div>
+            <h1 class="text-3xl font-bold">Products</h1>
+            <p class="mt-1 text-slate-600">Search products and monitor their current stock.</p>
+        </div>
+        <a th:href="@{/admin/products/new}" class="inline-flex items-center justify-center gap-2 rounded bg-blue-700 px-5 py-3 font-semibold text-white hover:bg-blue-800">
+            <span class="material-symbols-outlined text-xl">add</span> Add product
+        </a>
+    </div>
+
+    <div th:if="${successMessage}" class="mt-6 rounded border border-green-200 bg-green-50 px-4 py-3 text-green-800" th:text="${successMessage}"></div>
+
+    <form method="get" th:action="@{/admin/products}" class="mt-6 grid gap-4 rounded-lg border border-slate-200 bg-white p-5 md:grid-cols-[1fr_240px_auto]">
+        <div>
+            <label for="keyword" class="mb-1 block text-sm font-medium">Search by name or SKU</label>
+            <input id="keyword" name="keyword" th:value="${keyword}" placeholder="e.g. running shoe or RUN-001" class="w-full rounded border-slate-300">
+        </div>
+        <div>
+            <label for="stock" class="mb-1 block text-sm font-medium">Stock level</label>
+            <select id="stock" name="stock" class="w-full rounded border-slate-300">
+                <option th:each="filter : ${stockFilters}" th:value="${filter.name()}" th:text="${filter.label}" th:selected="${filter == selectedStock}">All</option>
+            </select>
+        </div>
+        <div class="flex items-end gap-2">
+            <button type="submit" class="rounded bg-slate-900 px-5 py-2.5 font-semibold text-white hover:bg-slate-700">Apply</button>
+            <a th:href="@{/admin/products}" class="rounded border border-slate-300 px-5 py-2.5 font-medium hover:bg-slate-50">Clear</a>
+        </div>
+    </form>
+
+    <section class="mt-6 overflow-hidden rounded-lg border border-slate-200 bg-white">
+        <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4">
+            <p class="text-sm text-slate-600"><strong th:text="${productPage.totalElements}">0</strong> products found</p>
+            <a th:href="@{/admin/products(stock='OUT_OF_STOCK')}" class="text-sm font-semibold text-red-700 hover:underline">Show out-of-stock products</a>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full min-w-[900px] text-left">
+                <thead class="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+                <tr><th class="px-5 py-3">Product</th><th class="px-5 py-3">SKU</th><th class="px-5 py-3">Category</th><th class="px-5 py-3">Price</th><th class="px-5 py-3">Stock</th><th class="px-5 py-3">Visibility</th><th class="px-5 py-3">Updated</th></tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200">
+                <tr th:each="product : ${productPage.content}" class="hover:bg-slate-50">
+                    <td class="px-5 py-4"><p class="font-semibold" th:text="${product.name}">Product</p><p class="text-xs text-slate-500" th:text="${product.slug}">slug</p></td>
+                    <td class="px-5 py-4 font-mono text-sm" th:text="${product.sku}">SKU</td>
+                    <td class="px-5 py-4" th:text="${product.categoryName}">Category</td>
+                    <td class="px-5 py-4 font-semibold" th:text="${'$' + #numbers.formatDecimal(product.price, 1, 2)}">$0.00</td>
+                    <td class="px-5 py-4">
+                        <span th:if="${product.outOfStock}" class="rounded-full bg-red-100 px-3 py-1 text-sm font-semibold text-red-700">Out of stock</span>
+                        <span th:if="${product.lowStock}" class="rounded-full bg-amber-100 px-3 py-1 text-sm font-semibold text-amber-800" th:text="${product.quantity + ' left'}">Low</span>
+                        <span th:if="${!product.outOfStock and !product.lowStock}" class="rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-700" th:text="${product.quantity + ' in stock'}">In stock</span>
+                    </td>
+                    <td class="px-5 py-4"><span th:text="${product.active ? 'Active' : 'Hidden'}" th:class="${product.active ? 'text-green-700' : 'text-slate-500'}">Active</span></td>
+                    <td class="px-5 py-4 text-sm text-slate-500" th:text="${#temporals.format(product.updatedAt, 'dd/MM/yyyy HH:mm')}">date</td>
+                </tr>
+                <tr th:if="${productPage.totalElements == 0}"><td colspan="7" class="px-5 py-16 text-center text-slate-500">No products match these filters.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <nav th:if="${productPage.totalPages > 1}" class="mt-6 flex justify-center gap-2">
+        <a th:if="${productPage.hasPrevious()}" th:href="@{/admin/products(keyword=${keyword},stock=${selectedStock.name()},page=${productPage.number - 1})}" class="rounded border bg-white px-4 py-2">Previous</a>
+        <span class="px-4 py-2 text-sm text-slate-600">Page <strong th:text="${productPage.number + 1}">1</strong> of <strong th:text="${productPage.totalPages}">1</strong></span>
+        <a th:if="${productPage.hasNext()}" th:href="@{/admin/products(keyword=${keyword},stock=${selectedStock.name()},page=${productPage.number + 1})}" class="rounded border bg-white px-4 py-2">Next</a>
+    </nav>
+</main>
+</body>
+</html>

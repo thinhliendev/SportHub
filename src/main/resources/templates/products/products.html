@@ -209,7 +209,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <article th:each="product : ${productPage.content}" class="bg-surface-container-lowest border border-outline-variant rounded overflow-hidden hover:shadow-sm hover:shadow-[0_2px_4px_rgba(0,0,0,0.05)] transition-shadow duration-200 group flex flex-col">
                 <div class="w-full h-48 bg-surface-container-low overflow-hidden relative">
-                    <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" th:alt="${product.name}" th:src="${product.imageUrl}">
+                    <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" th:alt="${product.name}" th:src="${product.imageUrl}" onerror="this.onerror=null;this.src='/images/products/placeholder.svg'">
                 </div>
                 <div class="p-4 flex flex-col flex-grow">
                     <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1" th:text="${product.categoryName}">Category</span>
@@ -221,7 +221,7 @@
                     </button>
                 </div>
             </article>
-            <p th:if="${productPage.empty}" class="sm:col-span-2 lg:col-span-3 py-16 text-center text-on-surface-variant">No products are available yet.</p>
+            <p th:if="${productPage.totalElements == 0}" class="sm:col-span-2 lg:col-span-3 py-16 text-center text-on-surface-variant">No products are available yet.</p>
         </div>
         <div th:if="${productPage.totalPages > 1}" class="mt-12 flex justify-center gap-2">
             <a th:if="${productPage.hasPrevious()}" th:href="@{/products(page=${productPage.number - 1})}" class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant text-on-surface-variant hover:bg-surface-variant"><span class="material-symbols-outlined text-sm">chevron_left</span></a>

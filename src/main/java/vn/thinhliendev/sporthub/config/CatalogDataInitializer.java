@@ -3,6 +3,7 @@ package vn.thinhliendev.sporthub.config;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import vn.thinhliendev.sporthub.catalog.entity.Category;
@@ -12,17 +13,30 @@ import vn.thinhliendev.sporthub.catalog.repository.ProductRepository;
 import vn.thinhliendev.sporthub.inventory.entity.Inventory;
 import vn.thinhliendev.sporthub.inventory.repository.InventoryRepository;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 @Profile("dev")
 public class CatalogDataInitializer implements ApplicationRunner {
 
+    private static final String SAMPLE_DATA = "data/sample-products.csv";
+
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
     private final InventoryRepository inventoryRepository;
 
-    public CatalogDataInitializer(CategoryRepository categoryRepository, ProductRepository productRepository,
+    public CatalogDataInitializer(CategoryRepository categoryRepository,
+                                  ProductRepository productRepository,
                                   InventoryRepository inventoryRepository) {
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
@@ -31,32 +45,81 @@ public class CatalogDataInitializer implements ApplicationRunner {
 
     @Override
     @Transactional
-    public void run(ApplicationArguments args) {
-        if (productRepository.count() > 0) {
+    public void run(ApplicationArguments args) throws IOException {
+        Map<String, Category> categories = categoryRepository.findAll().stream()
+                .collect(Collectors.toMap(category -> category.getName().toLowerCase(Locale.ROOT),
+                        Function.identity(), (first, ignored) -> first, HashMap::new));
+        List<Product> existingProducts = productRepository.findAll();
+        Map<String, Product> productsBySku = existingProducts.stream()
+                .collect(Collectors.toMap(product -> product.getSku().toLowerCase(Locale.ROOT),
+                        Function.identity(), (first, ignored) -> first, HashMap::new));
+        Map<String, Product> productsBySlug = existingProducts.stream()
+                .collect(Collectors.toMap(product -> product.getSlug().toLowerCase(Locale.ROOT),
+                        Function.identity(), (first, ignored) -> first, HashMap::new));
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+                new ClassPathResource(SAMPLE_DATA).getInputStream(), StandardCharsets.UTF_8))) {
+            reader.lines().skip(1).filter(line -> !line.isBlank())
+                    .forEach(line -> importRow(line, categories, productsBySku, productsBySlug));
+        }
+    }
+
+    private void importRow(String line, Map<String, Category> categories,
+                           Map<String, Product> productsBySku, Map<String, Product> productsBySlug) {
+        String[] columns = line.split(",", -1);
+        if (columns.length != 7) {
+            throw new IllegalStateException("Invalid sample product row: " + line);
+        }
+
+        String categoryName = columns[0].trim();
+        String name = columns[1].trim();
+        String slug = columns[2].trim().toLowerCase(Locale.ROOT);
+        String sku = columns[3].trim().toUpperCase(Locale.ROOT);
+        BigDecimal price = new BigDecimal(columns[4].trim());
+        int quantity = Integer.parseInt(columns[5].trim());
+        String imageUrl = columns[6].trim();
+
+        Category category = categories.computeIfAbsent(categoryName.toLowerCase(Locale.ROOT),
+                ignored -> createCategory(categoryName));
+        Product existingBySku = productsBySku.get(sku.toLowerCase(Locale.ROOT));
+        if (existingBySku != null) {
+            if (existingBySku.getImageUrl() == null || existingBySku.getImageUrl().startsWith("http")) {
+                migrateLegacyProduct(existingBySku, category, name, slug, sku, price, quantity, imageUrl);
+            }
             return;
         }
 
-        Category running = categoryRepository.save(new Category("Running", "running", "Running shoes and apparel"));
-        Category equipment = categoryRepository.save(new Category("Equipment", "equipment", "Training equipment and accessories"));
-        Category apparel = categoryRepository.save(new Category("Apparel", "apparel", "Performance sportswear"));
+        Product existingBySlug = productsBySlug.get(slug);
+        if (existingBySlug != null) {
+            migrateLegacyProduct(existingBySlug, category, name, slug, sku, price, quantity, imageUrl);
+            productsBySku.put(sku.toLowerCase(Locale.ROOT), existingBySlug);
+            return;
+        }
 
-        createProduct(running, "AeroMax Elite Running Shoe", "aeromax-elite-running-shoe", "RUN-AM-001",
-                new BigDecimal("189.99"), 12,
-                "https://lh3.googleusercontent.com/aida-public/AB6AXuDlvim76ZsY4DQQ4qlYxZF_7QZjFiv0Buf-uFMKCpx7ZYBMMpAnl5H3s_dhMCAgm4YJaGWxALyN8lDCwErPS0SBEI_Asn5dA4FHOdYVJF1vN1C548LuM7MgEWpR6ZHh_tbjI8AR-1MoJxQfm9L5B4bahDxLwEbXPSQxkDd-ISNm25HP_jc9_-e8fwxUrmeIbIATYO4EIQDdguPY42xSA9_O6mNe_oJPzlLEI9WRDztUjBUMB99vFs6gRg");
-        createProduct(equipment, "Pro-Series Training Duffel", "pro-series-training-duffel", "EQ-DUF-001",
-                new BigDecimal("75.00"), 20,
-                "https://lh3.googleusercontent.com/aida-public/AB6AXuBuUAIk6RWorw3qODK9sUl310M-RHk23MZqNv8Aqn_jxqzba1Mtdp4ZRO8ud1kNZtdnbZltMUh8CoSpFm9mYoFauErhRlUlDBJazCinnkDAMFOV9_t9bFIv1kEl_Efrj_73P3A9VbQ73xYRd0AxwEHB0yYn30cV6KOdqlJsUWnDBK8JbCV-IZTRqIPWMyN8iS5VINRw8CcwHluXyNwORgv5dIb80YEz4BVmzePaFekgC51ETfg_Kq2jPg");
-        createProduct(apparel, "Core Compression Top", "core-compression-top", "APP-TOP-001",
-                new BigDecimal("45.00"), 8,
-                "https://lh3.googleusercontent.com/aida-public/AB6AXuCbnHgE2wpks2H6QnNW-3XZlJp-NWsf7uYHwGKi3pr_5zIWZiRvG0x-m4iCq4zKlzcCXw2-f4iwqhJK6ElnEUs51_szUpDM1nQfs1d8dYz7TMVfse3uuNFGbrdqufV_0PGgF9dC48F5_765EUvyf0hvpHjQdHGelXlBltaU4sP5hQe9fSzaYoprZdTmDKtQkwp0Nx02eiFkNoXBUg2glpTpayi-Daj3ZOFzRuWPlRnHjLwnZItwja3GVg");
-        createProduct(apparel, "Sprint Woven Shorts", "sprint-woven-shorts", "APP-SHO-001",
-                new BigDecimal("38.00"), 0,
-                "https://lh3.googleusercontent.com/aida-public/AB6AXuA_UasQ_yh3WDWS_uZQ2wdyP-ni26u7B3cz_PnaY1TBx6Zue82lJ1PyLUhCGfsUZjfsnvaUBa8k7G_EJ6Hli3xwAAX-59lhcMxSG12P_kurcjwB9AB1HUsZQlFMmkkQ7wVKNdUcbo90RUW6hra3rjjd83flQurjYYi09QNZiBkkjnyT1mKzuTed4uKHHdpq15e58l99gwACUqQTS6YTIWkQ0iRFjgyGEAntDb4Dy-QVZ2syiz8ck9T3GQ");
+        Product product = createProduct(category, name, slug, sku, price, quantity, imageUrl);
+        productsBySku.put(sku.toLowerCase(Locale.ROOT), product);
+        productsBySlug.put(slug, product);
     }
 
-    private void createProduct(Category category, String name, String slug, String sku,
-                               BigDecimal price, int quantity, String imageUrl) {
+    private Category createCategory(String name) {
+        String slug = name.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]+", "-")
+                .replaceAll("(^-|-$)", "");
+        return categoryRepository.save(new Category(name, slug, "Sample products for " + name));
+    }
+
+    private void migrateLegacyProduct(Product product, Category category, String name, String slug,
+                                      String sku, BigDecimal price, int quantity, String imageUrl) {
+        product.migrateSampleData(category, name, slug, sku, price, imageUrl);
+        Inventory inventory = inventoryRepository.findByProductId(product.getId())
+                .orElseGet(() -> new Inventory(product, quantity));
+        inventory.changeQuantity(quantity);
+        inventoryRepository.save(inventory);
+    }
+
+    private Product createProduct(Category category, String name, String slug, String sku,
+                                  BigDecimal price, int quantity, String imageUrl) {
         Product product = productRepository.save(new Product(category, name, slug, sku, null, price, imageUrl));
         inventoryRepository.save(new Inventory(product, quantity));
+        return product;
     }
 }

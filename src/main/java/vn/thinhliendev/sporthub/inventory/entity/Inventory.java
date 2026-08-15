@@ -51,6 +51,13 @@ public class Inventory {
         updatedAt = LocalDateTime.now();
     }
 
+    public void changeQuantity(int quantity) {
+        if (quantity < 0) {
+            throw new IllegalArgumentException("Inventory quantity cannot be negative");
+        }
+        this.quantity = quantity;
+    }
+
     public Long getId() { return id; }
     public Product getProduct() { return product; }
     public int getQuantity() { return quantity; }

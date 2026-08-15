@@ -1,0 +1,51 @@
+category,name,slug,sku,price,quantity,imageUrl
+Running,AeroMax Elite Running Shoe,aeromax-elite-running-shoe,RUN-SHO-001,189.99,12,/images/products/aeromax-elite.webp
+Running,Velocity Cloud Runner,velocity-cloud-runner,RUN-SHO-002,129.99,18,/images/products/velocity-cloud-runner.webp
+Running,PulseFlex Daily Trainer,pulseflex-daily-trainer,RUN-SHO-003,99.99,24,/images/products/pulseflex-trainer.webp
+Running,TrailGuard Terrain Shoe,trailguard-terrain-shoe,RUN-SHO-004,149.99,9,/images/products/trailguard-terrain.webp
+Running,SprintLite Racing Shoe,sprintlite-racing-shoe,RUN-SHO-005,169.99,6,/images/products/sprintlite-racing.webp
+Running,Endurance Pro Running Shoe,endurance-pro-running-shoe,RUN-SHO-006,139.99,15,/images/products/endurance-pro.webp
+Running,MotionCore Stability Shoe,motioncore-stability-shoe,RUN-SHO-007,119.99,20,/images/products/motioncore-stability.webp
+Running,UrbanDash Running Shoe,urbandash-running-shoe,RUN-SHO-008,89.99,0,/images/products/urbandash.webp
+Running,PeakFlow Lightweight Shoe,peakflow-lightweight-shoe,RUN-SHO-009,109.99,11,/images/products/peakflow.webp
+Running,MarathonX Carbon Shoe,marathonx-carbon-shoe,RUN-SHO-010,219.99,4,/images/products/marathonx-carbon.webp
+Apparel,Core Compression Top,core-compression-top,APP-TOP-001,45.00,8,/images/products/core-compression-top.webp
+Apparel,Sprint Woven Shorts,sprint-woven-shorts,APP-SHO-001,38.00,0,/images/products/sprint-woven-shorts.webp
+Apparel,ActiveDry Training Shirt,activedry-training-shirt,APP-TSH-001,32.99,25,/images/products/activedry-shirt.webp
+Apparel,Performance Running Jacket,performance-running-jacket,APP-JAC-001,89.99,7,/images/products/performance-jacket.webp
+Apparel,FlexMotion Training Pants,flexmotion-training-pants,APP-PAN-001,59.99,14,/images/products/flexmotion-pants.webp
+Apparel,Essential Sports Hoodie,essential-sports-hoodie,APP-HOO-001,64.99,16,/images/products/essential-hoodie.webp
+Apparel,AeroFit Running Singlet,aerofit-running-singlet,APP-SIN-001,29.99,22,/images/products/aerofit-singlet.webp
+Apparel,ProGuard Goalkeeper Jersey,proguard-goalkeeper-jersey,APP-JER-001,54.99,10,/images/products/goalkeeper-jersey.webp
+Apparel,CourtFlex Polo Shirt,courtflex-polo-shirt,APP-POL-001,44.99,13,/images/products/courtflex-polo.webp
+Apparel,Recovery Compression Leggings,recovery-compression-leggings,APP-LEG-001,49.99,5,/images/products/recovery-leggings.webp
+Equipment,Pro-Series Training Duffel,pro-series-training-duffel,EQ-DUF-001,75.00,20,/images/products/training-duffel.webp
+Equipment,Adjustable Training Cone Set,adjustable-training-cone-set,EQ-CON-001,24.99,30,/images/products/training-cones.webp
+Equipment,SpeedPro Agility Ladder,speedpro-agility-ladder,EQ-AGI-001,34.99,17,/images/products/agility-ladder.webp
+Equipment,PowerGrip Resistance Bands,powergrip-resistance-bands,EQ-BAN-001,29.99,28,/images/products/resistance-bands.webp
+Equipment,CoreBalance Exercise Mat,corebalance-exercise-mat,EQ-MAT-001,39.99,19,/images/products/exercise-mat.webp
+Equipment,HydroFlow Sports Bottle,hydroflow-sports-bottle,EQ-BOT-001,18.99,35,/images/products/sports-bottle.webp
+Equipment,SmartCount Jump Rope,smartcount-jump-rope,EQ-ROP-001,27.99,12,/images/products/jump-rope.webp
+Equipment,IronCore Kettlebell 12kg,ironcore-kettlebell-12kg,EQ-KET-012,52.99,8,/images/products/kettlebell-12kg.webp
+Equipment,FlexRoll Recovery Roller,flexroll-recovery-roller,EQ-ROL-001,31.99,21,/images/products/recovery-roller.webp
+Equipment,TeamPro First Aid Kit,teampro-first-aid-kit,EQ-AID-001,46.99,0,/images/products/first-aid-kit.webp
+Football,Striker Pro Match Ball,striker-pro-match-ball,FTB-BAL-001,59.99,16,/images/products/striker-match-ball.webp
+Football,ControlX Training Ball,controlx-training-ball,FTB-BAL-002,34.99,27,/images/products/controlx-ball.webp
+Football,GripGuard Goalkeeper Gloves,gripguard-goalkeeper-gloves,FTB-GLV-001,49.99,9,/images/products/goalkeeper-gloves.webp
+Football,SpeedLock Shin Guards,speedlock-shin-guards,FTB-SHG-001,22.99,23,/images/products/shin-guards.webp
+Football,Precision Portable Goal,precision-portable-goal,FTB-GOL-001,129.99,3,/images/products/portable-goal.webp
+Football,Team Captain Armband,team-captain-armband,FTB-ARM-001,12.99,40,/images/products/captain-armband.webp
+Football,Tactical Coaching Board,tactical-coaching-board,FTB-COA-001,28.99,11,/images/products/coaching-board.webp
+Badminton,AeroStrike Carbon Racket,aerostrike-carbon-racket,BAD-RAC-001,119.99,10,/images/products/aerostrike-racket.webp
+Badminton,PowerSmash Pro Racket,powersmash-pro-racket,BAD-RAC-002,149.99,6,/images/products/powersmash-racket.webp
+Badminton,ControlLite Beginner Racket,controllite-beginner-racket,BAD-RAC-003,49.99,18,/images/products/controllite-racket.webp
+Badminton,Tournament Feather Shuttlecock,tournament-feather-shuttlecock,BAD-SHU-001,29.99,26,/images/products/feather-shuttlecock.webp
+Badminton,Durable Nylon Shuttlecock,durable-nylon-shuttlecock,BAD-SHU-002,16.99,32,/images/products/nylon-shuttlecock.webp
+Badminton,CourtGrip Badminton Shoes,courtgrip-badminton-shoes,BAD-SHO-001,84.99,0,/images/products/badminton-shoes.webp
+Badminton,ProCourt Racket Bag,procourt-racket-bag,BAD-BAG-001,44.99,13,/images/products/racket-bag.webp
+Racket Sports,Precision Tour Tennis Racket,precision-tour-tennis-racket,RKT-TEN-001,159.99,7,/images/products/tennis-racket.webp
+Racket Sports,ControlSpin Tennis Racket,controlspin-tennis-racket,RKT-TEN-002,109.99,9,/images/products/controlspin-racket.webp
+Racket Sports,Championship Tennis Ball Pack,championship-tennis-ball-pack,RKT-BAL-001,14.99,38,/images/products/tennis-ball-pack.webp
+Racket Sports,PowerEdge Pickleball Paddle,poweredge-pickleball-paddle,RKT-PIC-001,79.99,14,/images/products/pickleball-paddle.webp
+Racket Sports,ControlTouch Pickleball Set,controltouch-pickleball-set,RKT-PIC-002,99.99,5,/images/products/pickleball-set.webp
+Racket Sports,Universal Court Net,universal-court-net,RKT-NET-001,89.99,0,/images/products/court-net.webp

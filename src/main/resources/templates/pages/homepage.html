@@ -133,6 +133,9 @@
             <a class="font-body-md text-body-md font-medium text-primary hover:text-primary-container transition-colors cursor-pointer active:scale-95 hidden md:block" th:href="@{/login}" sec:authorize="isAnonymous()">
                 Account
             </a>
+            <a class="font-body-md text-body-md font-medium text-primary hover:text-primary-container transition-colors cursor-pointer active:scale-95 hidden md:block" th:href="@{/admin}" sec:authorize="hasRole('ADMIN')">
+                Dashboard
+            </a>
             <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()" class="hidden md:block">
                 <button class="font-body-md text-body-md font-medium text-primary hover:text-primary-container transition-colors cursor-pointer active:scale-95" type="submit">Logout</button>
             </form>

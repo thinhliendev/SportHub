@@ -79,6 +79,16 @@ public class Product {
         updatedAt = LocalDateTime.now();
     }
 
+    public void migrateSampleData(Category category, String name, String slug, String sku,
+                                  BigDecimal price, String imageUrl) {
+        this.category = category;
+        this.name = name;
+        this.slug = slug;
+        this.sku = sku;
+        this.price = price;
+        this.imageUrl = imageUrl;
+    }
+
     public Long getId() { return id; }
     public Category getCategory() { return category; }
     public String getName() { return name; }

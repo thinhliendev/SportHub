@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="title description">
+  <title id="title">SportHub product image placeholder</title>
+  <desc id="description">A neutral placeholder displayed when a product image is unavailable.</desc>
+  <rect width="640" height="480" fill="#f2f4f7"/>
+  <circle cx="320" cy="205" r="72" fill="#d1e4ff"/>
+  <path d="M270 205h100M320 155v100" stroke="#0061a4" stroke-width="18" stroke-linecap="round"/>
+  <text x="320" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#404752">SportHub</text>
+  <text x="320" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#707883">Product image coming soon</text>
+</svg>

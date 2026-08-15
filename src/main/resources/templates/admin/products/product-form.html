@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add Product | SportHub Admin</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-slate-100 font-[Inter] text-slate-900">
+<header class="border-b bg-white"><nav class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4"><a th:href="@{/admin}" class="text-2xl font-bold text-blue-700">SportHub Admin</a><a th:href="@{/admin/products}" class="font-medium text-blue-700">Back to products</a></nav></header>
+<main class="mx-auto max-w-3xl px-6 py-8">
+    <div><h1 class="text-3xl font-bold">Add new product</h1><p class="mt-1 text-slate-600">Product and initial inventory will be created together.</p></div>
+    <form th:action="@{/admin/products}" th:object="${productForm}" method="post" class="mt-6 space-y-6 rounded-lg border border-slate-200 bg-white p-6">
+        <div th:if="${#fields.hasGlobalErrors()}" class="rounded bg-red-50 p-3 text-red-700"><p th:each="error : ${#fields.globalErrors()}" th:text="${error}"></p></div>
+        <div class="grid gap-5 md:grid-cols-2">
+            <div class="md:col-span-2"><label class="mb-1 block font-medium" for="name">Product name</label><input id="name" th:field="*{name}" class="w-full rounded border-slate-300"><p th:errors="*{name}" class="mt-1 text-sm text-red-600"></p></div>
+            <div><label class="mb-1 block font-medium" for="slug">Slug</label><input id="slug" th:field="*{slug}" placeholder="aeromax-running-shoe" class="w-full rounded border-slate-300"><p th:errors="*{slug}" class="mt-1 text-sm text-red-600"></p></div>
+            <div><label class="mb-1 block font-medium" for="sku">SKU</label><input id="sku" th:field="*{sku}" placeholder="RUN-AM-001" class="w-full rounded border-slate-300"><p th:errors="*{sku}" class="mt-1 text-sm text-red-600"></p></div>
+            <div><label class="mb-1 block font-medium" for="categoryId">Category</label><select id="categoryId" th:field="*{categoryId}" class="w-full rounded border-slate-300"><option value="">Choose category</option><option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Category</option></select><p th:errors="*{categoryId}" class="mt-1 text-sm text-red-600"></p><p th:if="${#lists.isEmpty(categories)}" class="mt-1 text-sm text-amber-700">No active category exists. Create a category before adding products.</p></div>
+            <div><label class="mb-1 block font-medium" for="price">Price</label><input id="price" th:field="*{price}" type="number" min="0.01" step="0.01" class="w-full rounded border-slate-300"><p th:errors="*{price}" class="mt-1 text-sm text-red-600"></p></div>
+            <div><label class="mb-1 block font-medium" for="quantity">Initial quantity</label><input id="quantity" th:field="*{quantity}" type="number" min="0" class="w-full rounded border-slate-300"><p th:errors="*{quantity}" class="mt-1 text-sm text-red-600"></p></div>
+            <div><label class="mb-1 block font-medium" for="imageUrl">Image URL</label><input id="imageUrl" th:field="*{imageUrl}" type="url" class="w-full rounded border-slate-300"><p th:errors="*{imageUrl}" class="mt-1 text-sm text-red-600"></p></div>
+            <div class="md:col-span-2"><label class="mb-1 block font-medium" for="description">Description</label><textarea id="description" th:field="*{description}" rows="5" class="w-full rounded border-slate-300"></textarea><p th:errors="*{description}" class="mt-1 text-sm text-red-600"></p></div>
+        </div>
+        <div class="flex justify-end gap-3 border-t pt-5"><a th:href="@{/admin/products}" class="rounded border border-slate-300 px-5 py-3 font-medium">Cancel</a><button type="submit" th:disabled="${#lists.isEmpty(categories)}" class="rounded bg-blue-700 px-5 py-3 font-semibold text-white hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50">Create product</button></div>
+    </form>
+</main>
+</body>
+</html>
