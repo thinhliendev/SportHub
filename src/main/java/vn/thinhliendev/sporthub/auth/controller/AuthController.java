@@ -12,6 +12,8 @@ import vn.thinhliendev.sporthub.auth.dto.RegistrationForm;
 import vn.thinhliendev.sporthub.auth.service.EmailAlreadyExistsException;
 import vn.thinhliendev.sporthub.auth.service.UserService;
 
+import java.security.Principal;
+
 @Controller
 public class AuthController {
 
@@ -22,7 +24,10 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(Principal principal) {
+        if (principal != null) {
+            return "redirect:/";
+        }
         return "auth/login";
     }
 
